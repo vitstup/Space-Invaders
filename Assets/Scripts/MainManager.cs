@@ -30,6 +30,7 @@ public class MainManager : MonoBehaviour
         player.ResetHealthPoints();
         fleet.CreateFleet();
         player.SetStartPosition();
+        player.ResetInvincibility();
 
         uiManager.Restarted();
     }

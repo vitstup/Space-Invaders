@@ -4,11 +4,11 @@ public class Enemy : Ship
 {
     [Inject] BulletsManager bulletsManager;
     [Inject] MainManager mainManager;
+    [Inject] AudioManager audioManager;
 
-    public override void Shoot()
+    private void Awake()
     {
-        var bullet = bulletsManager.enemyBulletsPool.GetElement();
-        bullet.Shoot(transform.position, -1f, tag);
+        weapon = new EnemyBlaster(bulletsManager, audioManager);
     }
 
     public override void TakeDamage()
@@ -20,5 +20,10 @@ public class Enemy : Ship
     {
         base.Die();
         mainManager.AddScore(1);
+    }
+
+    protected override float GetShootDirection()
+    {
+        return -1f;
     }
 }

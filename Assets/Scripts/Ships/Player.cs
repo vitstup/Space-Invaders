@@ -7,6 +7,7 @@ public class Player : Ship
     [Inject] BulletsManager bulletsManager;
     [Inject] UIManager uiManager;
     [Inject] MainManager mainManager;
+    [Inject] AudioManager audioManager;
 
     [field: SerializeField] public int livePoints { get; private set; }
 
@@ -14,10 +15,9 @@ public class Player : Ship
 
     private bool invinsible;
 
-    public override void Shoot()
+    private void Awake()
     {
-        var bullet = bulletsManager.playerBulletsPool.GetElement();
-        bullet.Shoot(transform.position, 1f, tag);
+        weapon = new EnemyBlaster(bulletsManager, audioManager);
     }
 
     public override void TakeDamage()
@@ -36,8 +36,7 @@ public class Player : Ship
         invinsible = true;
         spriteRenderer.color = new Color(1, 1, 1, 0.33f);
         yield return new WaitForSeconds(invinsibleTime);
-        spriteRenderer.color = Color.white;
-        invinsible = false;
+        ResetInvincibility();
     }
 
     public void ResetHealthPoints()
@@ -61,5 +60,16 @@ public class Player : Ship
     public void SetStartPosition()
     {
         transform.position = new Vector2(0, -1);
+    }
+
+    protected override float GetShootDirection()
+    {
+        return 1f;
+    }
+
+    public void ResetInvincibility()
+    {
+        spriteRenderer.color = Color.white;
+        invinsible = false;
     }
 }

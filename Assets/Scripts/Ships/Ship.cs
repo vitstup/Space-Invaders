@@ -10,6 +10,8 @@ public abstract class Ship : MonoBehaviour, IShootable, IMovableHorizontal, IMov
 
     protected SpriteRenderer spriteRenderer;
 
+    protected Weapon weapon;
+
     protected void Start()
     {
         GetBorders();
@@ -70,7 +72,12 @@ public abstract class Ship : MonoBehaviour, IShootable, IMovableHorizontal, IMov
 
     }
 
-    public abstract void Shoot();
+    public void Shoot()
+    {
+        weapon.Shoot(transform.position, GetShootDirection(), tag);
+    }
+
+    protected abstract float GetShootDirection();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

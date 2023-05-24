@@ -98,7 +98,7 @@ public class Fleet : MonoBehaviour
     {
         foreach (var ship in ships)
         {
-            if (ship.OutSideOfBorders(out bool y)) { if (y) { mainManager.Lose(); } return true; }
+            if (ship.OutSideOfBorders(out bool y) && ship.gameObject.activeSelf) { if (y) { mainManager.Lose(); } return true; }
         }
         return false;
     }

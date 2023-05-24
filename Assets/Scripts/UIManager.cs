@@ -1,11 +1,14 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class UIManager : MonoBehaviour
 {
     [Inject] private Player player;
     [Inject] private MainManager mainManager;
+    [Inject] private AudioManager audioManager;
+
     private ObjectPool heartPool;
 
     [SerializeField] private GameObject heartPrefab;
@@ -14,6 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
 
     [SerializeField] private Canvas restartCanvas;
+
+    [SerializeField] private Image audioImage;
+
+    [SerializeField] private Sprite soundOn;
+    [SerializeField] private Sprite soundOff;
 
     private void Awake()
     {
@@ -47,5 +55,11 @@ public class UIManager : MonoBehaviour
         ChangeLives();
         ChangeScoreText();
         restartCanvas.gameObject.SetActive(false);
+    }
+
+    public void AudioBtn()
+    {
+        audioManager.Mute();
+        audioImage.sprite = audioManager.muted ? soundOff : soundOn;
     }
 }
